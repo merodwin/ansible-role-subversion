@@ -1,2 +1,6 @@
 ---
 # defaults file for .
+svn_local_port: 8080
+svn_dir: "/svn"
+
+

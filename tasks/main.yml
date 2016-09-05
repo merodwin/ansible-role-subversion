@@ -1,2 +1,26 @@
 ---
 # tasks file for .
+- name: ensure subversion is installed
+  apt: "name={{item}} state=present"
+  with_items:
+  - apache2
+  - subversion
+  - libapache2-svn
+
+- name: create SVN directory
+  file: path="{{svn_dir}}" state=directory mode="755" owner=www-data group=www-data recurse=yes
+
+- name: enable svn in apache
+  template: src="subversion.conf.j2" dest="/etc/apache2/sites-enabled/subversion.conf"
+
+- name: rewrite default
+  template: src="000-default.conf.j2" dest="/etc/apache2/sites-enabled/000-default.conf"
+
+- name: restart apache
+  service: name=apache2 state=reloaded
+    
+
+
+
+  
+
